@@ -25,13 +25,13 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
   
   res.send('POST request to homepage');
-  console.log("j'ai reçu cela");
+  console.log("J'ai reçu cela");
 });
 
 app.put('/', function (req, res) {
-  res.send('PUT request to homepage');
+  res.send("J'ai modifié");
 });
 
 app.delete('/', function (req, res) {
-  res.send('DELETE request to homepage');
+  res.send("J'ai supprimé ");
 });
