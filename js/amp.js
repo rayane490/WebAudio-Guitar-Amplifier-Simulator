@@ -949,6 +949,8 @@ function Amp(context) {
         preset23 = {"name":"FirstPreset","distoName":"standard","boost":false,"LCF":200,"HCF":12000,"K1":"1.8","K2":"1.8","K3":"3.5","K4":"3.5","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"0.0","Q2":"49.0","Q3":"42.0","Q4":"11.0","OG":"8.0","BF":"5.0","MF":"6.7","TF":"9.1","PF":"2.5","EQ":[-2,-1,0,3,-9,-4],"MV":"1.8","RN":"Fender Hot Rod","RG":"8.5","CN":"Vintage Marshall 1","CG":"2.0"};
         presets.push(preset23);
         
+        preset24 = {"name":"DummyPreset","distoName":"standard","boost":false,"LCF":214,"HCF":15820,"K1":"2.4","K2":"2.4","K3":"4.8","K4":"4.8","F1":186,"F2":792,"F3":2402,"F4":4836,"Q1":"2.9","Q2":"0.7","Q3":"1.0","Q4":"1.0","OG":"10.0","BF":"10.0","MF":"6.0","TF":"10.0","PF":"9.6","EQ":[-25,-30,30,30,17,-3],"MV":"2.1","RN":"Fender Hot Rod","RG":"10.0","CN":"Vintage Marshall 1","CG":"7.4"};
+        presets.push(preset24);
         
         presets.forEach(function (p, index) {
             var option = document.createElement("option");
