@@ -22,10 +22,15 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
-app.post('/', function (req, res) {
+app.post('/listAllPresets', function (req, res) {
   
   res.send('POST request to homepage');
   console.log("J'ai reçu cela");
+});
+
+app.get('/getAllPresets', function (req, res) {
+    res.send('POST request to homepage');
+    console.log("J'ai reçu cela");
 });
 
 app.put('/', function (req, res) {

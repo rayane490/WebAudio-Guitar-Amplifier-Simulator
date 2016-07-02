@@ -1385,3 +1385,15 @@ var Boost = function(context) {
     };
 };
  
+function senddata() {
+     
+    console.log("lalalalala");
+     
+    $.ajax({
+       url: "http://localhost:8082/listAllPresets",
+       type: "POST",
+       data: '{"name":"current","distoName":"standard","boost":false,"LCF":200,"HCF":12000,"K1":"0.0","K2":"0.0","K3":"0.0","K4":"0.0","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"0.0","Q2":"49.0","Q3":"42.0","Q4":"11.0","OG":"5.0","BF":"5.0","MF":"4.2","TF":"3.1","PF":"5.0","EQ":[-2,-1,0,3,-9,-4],"MV":"5.8","RN":"Fender Hot Rod","RG":"2.0","CN":"Vintage Marshall 1","CG":"2.0"}',
+       contentType: "application/json"
+   });
+
+ }
