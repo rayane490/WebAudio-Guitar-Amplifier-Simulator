@@ -8,7 +8,7 @@ function gotStream() {
     // Create an AudioNode from the stream.
     mediaElement = document.getElementById('player');
 
-    if(input2 === undefined) {
+    if (input2 === undefined) {
         input2 = audioContext.createMediaElementSource(mediaElement);
     }
 
@@ -36,7 +36,7 @@ function createAmp(context, input1, input2) {
     amp.input.connect(analyzerAtInput);
 
     // build graph
-    if(guitarPluggedIn) {
+    if (guitarPluggedIn) {
         guitarInput.connect(amp.input);
     }
 
@@ -57,7 +57,7 @@ function createAmp(context, input1, input2) {
 function toggleGuitarInput(event) {
     var button = document.querySelector("#toggleGuitarIn");
 
-    if(!guitarPluggedIn) {
+    if (!guitarPluggedIn) {
         guitarInput.connect(amp.input);
         button.innerHTML = "Guitar input: <span style='color:green;'>ACTIVATED</span>, click to toggle on/off!";
         button.classList.remove("pulse");
@@ -130,7 +130,7 @@ function Equalizer(ctx) {
         //slider.value = value;
 
         // refresh amp slider state in the web component GUI
-        var sliderWC = document.querySelector("#slider" + (nbFilter+1));
+        var sliderWC = document.querySelector("#slider" + (nbFilter + 1));
         // second parameter set to false will not fire an event
         sliderWC.setValue(parseFloat(sliderVal).toFixed(0), false);
     }
@@ -170,7 +170,7 @@ function Amp(context) {
 
     var currentDistoName = "standard";
     var currentK = 2; // we have separates ks, but also a "global" one that
-                      // is the max of the four (the knob value)
+    // is the max of the four (the knob value)
     var currentWSCurve = wsFactory.distorsionCurves[currentDistoName](currentK);
     // for Wave Shaper Curves visualization
     var distoDrawer, signalDrawer;
@@ -278,18 +278,18 @@ function Amp(context) {
     // Master volume
     var masterVolume = context.createGain();
 
-/*
-    reverb = new Reverb(context, function () {
-        console.log("reverb created");
-
-        cabinetSim = new CabinetSimulator(context, function () {
-            console.log("cabinet sim created");
-
-            doAllConnections();
-
-        });
-    });
-*/
+    /*
+     reverb = new Reverb(context, function () {
+     console.log("reverb created");
+     
+     cabinetSim = new CabinetSimulator(context, function () {
+     console.log("cabinet sim created");
+     
+     doAllConnections();
+     
+     });
+     });
+     */
 
     reverb = new Convolver(context, reverbImpulses, "reverbImpulses");
     cabinetSim = new Convolver(context, cabinetImpulses, "cabinetImpulses");
@@ -308,7 +308,7 @@ function Amp(context) {
         buildGraph();
         initPresets();
 
-        setDefaultPreset();
+        //setDefaultPreset();
         console.log("running");
     }
 
@@ -356,7 +356,7 @@ function Amp(context) {
         byPass.connect(output);
     }
 
-    function boostOnOff(cb) {  
+    function boostOnOff(cb) {
         // called when we click the switch on the GUI      
         boost.toggle();
 
@@ -365,9 +365,9 @@ function Amp(context) {
     }
 
     function changeBoost(state) {
-        console.log("changeBoost, boost before: " + boost.isActivated() + " output gain=" + output.gain.value );
+        console.log("changeBoost, boost before: " + boost.isActivated() + " output gain=" + output.gain.value);
 
-        if(boost.isActivated() !== state) {
+        if (boost.isActivated() !== state) {
             // we need to adjust the output gain
             console.log("changeBoost: we change boost state");
             boost.onOff(state);
@@ -383,7 +383,7 @@ function Amp(context) {
     function adjustOutputGainIfBoostActivated() {
         console.log("adjustOutputGainIfBoostActivated: output gain value before = " + output.gain.value)
 
-        if(boost.isActivated()) {
+        if (boost.isActivated()) {
             output.gain.value /= 2;
         } else {
             output.gain.value *= 2;
@@ -395,10 +395,10 @@ function Amp(context) {
         // update buttons states
         var boostSwitch = document.querySelector("#toggleBoost");
 
-        if(boost.isActivated()) {
-            boostSwitch.setValue(1,false);
+        if (boost.isActivated()) {
+            boostSwitch.setValue(1, false);
         } else {
-            boostSwitch.setValue(0,false);
+            boostSwitch.setValue(0, false);
         }
     }
 
@@ -408,7 +408,7 @@ function Amp(context) {
     }
 
     function changeOutputGainValue(sliderVal) {
-        output.gain.value = parseFloat(sliderVal)/10;
+        output.gain.value = parseFloat(sliderVal) / 10;
         console.log("changeOutputGainValue value = " + output.gain.value);
     }
 
@@ -439,10 +439,10 @@ function Amp(context) {
         slider.value = parseFloat(sliderVal).toFixed(1);
     }
 
-  function changeBassFilterValue(sliderVal) {
+    function changeBassFilterValue(sliderVal) {
         // sliderVal is in [0, 10]
         var value = parseFloat(sliderVal);
-        bassFilter.gain.value = (value-5) * 3;
+        bassFilter.gain.value = (value - 5) * 3;
         console.log("bass gain set to " + bassFilter.gain.value);
 
         // update output labels
@@ -461,7 +461,7 @@ function Amp(context) {
     function changeMidFilterValue(sliderVal) {
         // sliderVal is in [0, 10]
         var value = parseFloat(sliderVal);
-        midFilter.gain.value = (value-5) * 2;
+        midFilter.gain.value = (value - 5) * 2;
 
         // update output labels
         //var output = document.querySelector("#midFreq");
@@ -479,7 +479,7 @@ function Amp(context) {
     function changeTrebleFilterValue(sliderVal) {
         // sliderVal is in [0, 10]
         var value = parseFloat(sliderVal);
-        trebleFilter.gain.value = (value-5) * 5;
+        trebleFilter.gain.value = (value - 5) * 5;
 
         // update output labels
         //var output = document.querySelector("#trebleFreq");
@@ -497,7 +497,7 @@ function Amp(context) {
     function changePresenceFilterValue(sliderVal) {
         // sliderVal is in [0, 10]
         var value = parseFloat(sliderVal);
-        presenceFilter.gain.value = (value-5) * 2;
+        presenceFilter.gain.value = (value - 5) * 2;
         //console.log("set presence freq to " + presenceFilter.frequency.value)
 
         // update output labels
@@ -515,18 +515,18 @@ function Amp(context) {
 
     // Build a drop down menu with all distorsion names
     function buildDistoMenu() {
-        for(var p in wsFactory.distorsionCurves) {
+        for (var p in wsFactory.distorsionCurves) {
             var option = document.createElement("option");
             option.value = p;
             option.text = p;
-            menuDisto.appendChild(option);    
+            menuDisto.appendChild(option);
         }
         menuDisto.onchange = changeDistoType;
     }
 
     function changeDistoType() {
         console.log("Changing disto to : " + menuDisto.value);
-        currentDistoName = menuDisto.value;      
+        currentDistoName = menuDisto.value;
         changeDrive(currentK);
     }
 
@@ -537,23 +537,23 @@ function Amp(context) {
     }
 
     function changeDrive(sliderValue) {
-      // sliderValue in [0,10]
-      // We can imagine having some "profiles here" -> generate
-      // different K values from one single sliderValue for the
-      // drive.
-      var profileValues = [1, 1, 1, 1];
-      // other values i.e [0.5, 0.5, 0.8, 1] -> less distorsion
-      // on bass frequencies and top high frequency
-      
-      for(var i = 0; i < 4; i++) {
-        // less distorsion on bass channels
-        if(i < 2) {
-            changeDistorsionValues(sliderValue/2, i);
-        } else {
-            changeDistorsionValues(sliderValue, i);
+        // sliderValue in [0,10]
+        // We can imagine having some "profiles here" -> generate
+        // different K values from one single sliderValue for the
+        // drive.
+        var profileValues = [1, 1, 1, 1];
+        // other values i.e [0.5, 0.5, 0.8, 1] -> less distorsion
+        // on bass frequencies and top high frequency
+
+        for (var i = 0; i < 4; i++) {
+            // less distorsion on bass channels
+            if (i < 2) {
+                changeDistorsionValues(sliderValue / 2, i);
+            } else {
+                changeDistorsionValues(sliderValue, i);
+            }
+
         }
-        
-      }
     }
 
     function changeDistorsionValues(sliderValue, numDisto) {
@@ -610,26 +610,26 @@ function Amp(context) {
         // calculate adjustment factor
         var scale = (maxv - minv) / (maxp - minp);
 
-        return (minp + (Math.log(logValue) - minv) / scale)/150;
+        return (minp + (Math.log(logValue) - minv) / scale) / 150;
     }
 
     function changeOversampling(cb) {
         for (var i = 0; i < 4; i++) {
-            if(cb.checked) {
+            if (cb.checked) {
                 // Oversampling generates some (small) latency
                 od[i].oversample = '4x';
                 boost.setOversampling('4x');
                 console.log("set oversampling to 4x");
             } else {
                 od[i].oversample = 'none';
-                 boost.setOversampling('none');
+                boost.setOversampling('none');
                 console.log("set oversampling to none");
             }
-         }
-         // Not sure if this is necessary... My ears can't hear the difference
-         // between oversampling=node and 4x ? Maybe we should re-init the
-         // waveshaper curves ?
-         changeDistoType();
+        }
+        // Not sure if this is necessary... My ears can't hear the difference
+        // between oversampling=node and 4x ? Maybe we should re-init the
+        // waveshaper curves ?
+        changeDistoType();
     }
 
     // Returns an array of distorsions values in [0, 10] range
@@ -711,7 +711,7 @@ function Amp(context) {
     function changeOutputGain(sliderVal) {
         // sliderVal is in [0, 10]
         // Adjust to [0, 1]
-        var value = parseFloat(sliderVal/10);
+        var value = parseFloat(sliderVal / 10);
         outputGain.gain.value = value;
 
         // update output labels
@@ -739,7 +739,7 @@ function Amp(context) {
         // refresh slider state
         //var slider = document.querySelector("#MVslider");
         //slider.value = parseFloat(sliderVal).toFixed(1);
-        
+
         // refresh knob state
         var knob = document.querySelector("#Knob2");
         knob.setValue(parseFloat(sliderVal).toFixed(1), false);
@@ -804,154 +804,164 @@ function Amp(context) {
     // --------
     function initPresets() {
         // updated 10/4/2016
-        preset1 = {"name":"Clean 1","distoName":"standard","boost":false,"LCF":200,"HCF":12000,"K1":"0.0","K2":"0.0","K3":"0.0","K4":"0.0","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"0.0","Q2":"49.0","Q3":"42.0","Q4":"11.0","OG":"5.0","BF":"5.0","MF":"4.2","TF":"3.1","PF":"5.0","EQ":[-2,-1,0,3,-9,-4],"MV":"5.8","RN":"Fender Hot Rod","RG":"2.0","CN":"Vintage Marshall 1","CG":"2.0"};
+        preset1 = {"name": "Clean 1", "distoName": "standard", "boost": false, "LCF": 200, "HCF": 12000, "K1": "0.0", "K2": "0.0", "K3": "0.0", "K4": "0.0", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "0.0", "Q2": "49.0", "Q3": "42.0", "Q4": "11.0", "OG": "5.0", "BF": "5.0", "MF": "4.2", "TF": "3.1", "PF": "5.0", "EQ": [-2, -1, 0, 3, -9, -4], "MV": "5.8", "RN": "Fender Hot Rod", "RG": "2.0", "CN": "Vintage Marshall 1", "CG": "2.0"};
         presets.push(preset1);
 
         preset2 = {
-            "name":"Crunch 1",
-            "LCF":90,
-            "HCF":7000,
-            "K1":"4.7",
-            "K2":"4.1",
-            "K3":"10.0",
-            "K4":"10.0",
-            "F1":147,
-            "F2":569,
-            "F3":1915,
-            "F4":4680,
-            "Q1":0,
-            "Q2":49,
-            "Q3":42,
-            "Q4":11,
-            "OG":7.9,
-            "BF":5,
-            "MF":5,
-            "TF":5,
-            "PF":5,
-            "EQ":[-2,-1,2,2,-7,-13],
-            "MV":"0.7",
-            "RG":"2.0",
-            "CG":"5.4"
+            "name": "Crunch 1",
+            "LCF": 90,
+            "HCF": 7000,
+            "K1": "4.7",
+            "K2": "4.1",
+            "K3": "10.0",
+            "K4": "10.0",
+            "F1": 147,
+            "F2": 569,
+            "F3": 1915,
+            "F4": 4680,
+            "Q1": 0,
+            "Q2": 49,
+            "Q3": 42,
+            "Q4": 11,
+            "OG": 7.9,
+            "BF": 5,
+            "MF": 5,
+            "TF": 5,
+            "PF": 5,
+            "EQ": [-2, -1, 2, 2, -7, -13],
+            "MV": "0.7",
+            "RG": "2.0",
+            "CG": "5.4"
         }
         presets.push(preset2);
 
         preset3 = {
-            "name":"Clean 2",
-            "LCF":242,
-            "HCF":17165,
-            "K1":"0.0",
-            "K2":"0.0",
-            "K3":"0.0",
-            "K4":"0.0",
-            "F1":204,
-            "F2":300,
-            "F3":2904,
-            "F4":5848,
-            "Q1":0,
-            "Q2":29,
-            "Q3":55,
-            "Q4":20,
-            "OG":"7.1",
-            "BF":7.2,
-            "MF":6.5,
-            "TF":5.9,
-            "PF":8,
-            "EQ":[-2,-1,-2,4,11,3],
-            "MV":"8.3",
-            "RG":"2.8",
-            "CG":"6.3"
+            "name": "Clean 2",
+            "LCF": 242,
+            "HCF": 17165,
+            "K1": "0.0",
+            "K2": "0.0",
+            "K3": "0.0",
+            "K4": "0.0",
+            "F1": 204,
+            "F2": 300,
+            "F3": 2904,
+            "F4": 5848,
+            "Q1": 0,
+            "Q2": 29,
+            "Q3": 55,
+            "Q4": 20,
+            "OG": "7.1",
+            "BF": 7.2,
+            "MF": 6.5,
+            "TF": 5.9,
+            "PF": 8,
+            "EQ": [-2, -1, -2, 4, 11, 3],
+            "MV": "8.3",
+            "RG": "2.8",
+            "CG": "6.3"
         };
         presets.push(preset3);
 
-        preset4 = {"name":"Funk Blues Clean","distoName":"standard","LCF":242,"HCF":7000,"K1":"5.0","K2":"5.0","K3":"9.9","K4":"9.9","F1":204,"F2":300,"F3":2904,"F4":5848,"Q1":"0.0","Q2":"29.0","Q3":"55.0","Q4":"20.0","OG":"2.1","BF":"9.9","MF":"6.5","TF":"2.7","PF":"8.0","EQ":[9,11,-19,-22,11,-15],"MV":"2.6","RG":"0.0","CG":"6.3"};
+        preset4 = {"name": "Funk Blues Clean", "distoName": "standard", "LCF": 242, "HCF": 7000, "K1": "5.0", "K2": "5.0", "K3": "9.9", "K4": "9.9", "F1": 204, "F2": 300, "F3": 2904, "F4": 5848, "Q1": "0.0", "Q2": "29.0", "Q3": "55.0", "Q4": "20.0", "OG": "2.1", "BF": "9.9", "MF": "6.5", "TF": "2.7", "PF": "8.0", "EQ": [9, 11, -19, -22, 11, -15], "MV": "2.6", "RG": "0.0", "CG": "6.3"};
         presets.push(preset4);
 
         preset5 = {
-            "name":"Marshall Hi Gain",
-            "LCF":345,
-            "HCF":18461,
-            "K1":"10.0",
-            "K2":"10.0",
-            "K3":"10.0",
-            "K4":"10.0",
-            "F1":186,
-            "F2":792,
-            "F3":2402,
-            "F4":6368,
-            "Q1":2,
-            "Q2":1,
-            "Q3":1,
-            "Q4":1,
-            "OG":"0.2",
-            "BF":"4.8",
-            "MF":"4.1",
-            "TF":"5.9",
-            "PF":"8.3",
-            "EQ":[14,7,28,3,22,18],
-            "MV":"2",
-            "RG":"2",
-            "CG":"7.4"
+            "name": "Marshall Hi Gain",
+            "LCF": 345,
+            "HCF": 18461,
+            "K1": "10.0",
+            "K2": "10.0",
+            "K3": "10.0",
+            "K4": "10.0",
+            "F1": 186,
+            "F2": 792,
+            "F3": 2402,
+            "F4": 6368,
+            "Q1": 2,
+            "Q2": 1,
+            "Q3": 1,
+            "Q4": 1,
+            "OG": "0.2",
+            "BF": "4.8",
+            "MF": "4.1",
+            "TF": "5.9",
+            "PF": "8.3",
+            "EQ": [14, 7, 28, 3, 22, 18],
+            "MV": "2",
+            "RG": "2",
+            "CG": "7.4"
         };
         presets.push(preset5);
 
-        preset6 = {"name":"Aerosmith WTW","distoName":"standard","LCF":345,"HCF":7000,"K1":"3.3","K2":"3.3","K3":"6.6","K4":"6.6","F1":186,"F2":792,"F3":2402,"F4":6368,"Q1":"2.0","Q2":"1.0","Q3":"1.0","Q4":"1.0","OG":"0.6","BF":"4.8","MF":"4.1","TF":"3.4","PF":"8.3","EQ":[12,2,22,13,16,18],"MV":"2.2","RG":"0.0","CG":"0.0"};
- 
+        preset6 = {"name": "Aerosmith WTW", "distoName": "standard", "LCF": 345, "HCF": 7000, "K1": "3.3", "K2": "3.3", "K3": "6.6", "K4": "6.6", "F1": 186, "F2": 792, "F3": 2402, "F4": 6368, "Q1": "2.0", "Q2": "1.0", "Q3": "1.0", "Q4": "1.0", "OG": "0.6", "BF": "4.8", "MF": "4.1", "TF": "3.4", "PF": "8.3", "EQ": [12, 2, 22, 13, 16, 18], "MV": "2.2", "RG": "0.0", "CG": "0.0"};
+
         presets.push(preset6);
 
-        preset7 = {"name":"MW 1","LCF":10,"HCF":7000,"K1":"5.0","K2":"8.5","K3":"10.0","K4":"2.0","F1":186,"F2":792,"F3":2402,"F4":6368,"Q1":16,"Q2":1,"Q3":1,"Q4":5,"OG":"0.4","BF":"6.0","MF":"2.4","TF":"3.7","PF":"2.6","EQ":[14,18,-5,3,13,25],"MV":"9.9","RG":"2.9","CG":"8.9"};
+        preset7 = {"name": "MW 1", "LCF": 10, "HCF": 7000, "K1": "5.0", "K2": "8.5", "K3": "10.0", "K4": "2.0", "F1": 186, "F2": 792, "F3": 2402, "F4": 6368, "Q1": 16, "Q2": 1, "Q3": 1, "Q4": 5, "OG": "0.4", "BF": "6.0", "MF": "2.4", "TF": "3.7", "PF": "2.6", "EQ": [14, 18, -5, 3, 13, 25], "MV": "9.9", "RG": "2.9", "CG": "8.9"};
         presets.push(preset7);
 
-        preset8 = {"name":"Hells Bells","distoName":"standard","boost":false,"LCF":157,"HCF":17716,"K1":"2.5","K2":"2.5","K3":"5.0","K4":"5.0","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"0.1","Q2":"0.6","Q3":"1.1","Q4":"0.1","OG":"4.5","BF":"5.0","MF":"5.0","TF":"5.0","PF":"5.0","EQ":[14,8,0,3,14,3],"MV":"0.5","RN":"Fender Hot Rod","RG":"2.0","CN":"Vintage Marshall 1","CG":"2.0"}
+        preset8 = {"name": "Hells Bells", "distoName": "standard", "boost": false, "LCF": 157, "HCF": 17716, "K1": "2.5", "K2": "2.5", "K3": "5.0", "K4": "5.0", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "0.1", "Q2": "0.6", "Q3": "1.1", "Q4": "0.1", "OG": "4.5", "BF": "5.0", "MF": "5.0", "TF": "5.0", "PF": "5.0", "EQ": [14, 8, 0, 3, 14, 3], "MV": "0.5", "RN": "Fender Hot Rod", "RG": "2.0", "CN": "Vintage Marshall 1", "CG": "2.0"}
         presets.push(preset8);
 
-        preset9 = {"name":"Smoke on the Water","LCF":298,"HCF":8703,"K1":"9.6","K2":"9.6","K3":"9.6","K4":"9.6","F1":300,"F2":1058,"F3":2297,"F4":7000,"Q1":2.5,"Q2":2,"Q3":0.6000000238418579,"Q4":0.4000000059604645,"OG":"4.5","BF":"4.0","MF":"8.5","TF":"3.8","PF":"3.1","EQ":[14,19,-7,-12,19,16],"MV":"1.8","RG":"1.6","CG":"10.0"};
+        preset9 = {"name": "Smoke on the Water", "LCF": 298, "HCF": 8703, "K1": "9.6", "K2": "9.6", "K3": "9.6", "K4": "9.6", "F1": 300, "F2": 1058, "F3": 2297, "F4": 7000, "Q1": 2.5, "Q2": 2, "Q3": 0.6000000238418579, "Q4": 0.4000000059604645, "OG": "4.5", "BF": "4.0", "MF": "8.5", "TF": "3.8", "PF": "3.1", "EQ": [14, 19, -7, -12, 19, 16], "MV": "1.8", "RG": "1.6", "CG": "10.0"};
         presets.push(preset9);
 
-        preset10 = {"name":"Neat Neat Neat/Punk","distoName":"standard","LCF":184,"HCF":7000,"K1":"4.0","K2":"4.0","K3":"8.0","K4":"8.0","F1":71,"F2":300,"F3":3303,"F4":6210,"Q1":"2.5","Q2":"0.0","Q3":"17.2","Q4":"0.4","OG":"2.0","BF":"4.0","MF":"1.6","TF":"2.0","PF":"6.4","EQ":[-12,-12,-10,3,1,2],"MV":"10.0","RG":"3.4","CG":"5.4"};
+        preset10 = {"name": "Neat Neat Neat/Punk", "distoName": "standard", "LCF": 184, "HCF": 7000, "K1": "4.0", "K2": "4.0", "K3": "8.0", "K4": "8.0", "F1": 71, "F2": 300, "F3": 3303, "F4": 6210, "Q1": "2.5", "Q2": "0.0", "Q3": "17.2", "Q4": "0.4", "OG": "2.0", "BF": "4.0", "MF": "1.6", "TF": "2.0", "PF": "6.4", "EQ": [-12, -12, -10, 3, 1, 2], "MV": "10.0", "RG": "3.4", "CG": "5.4"};
         presets.push(preset10);
 
-        preset11 = {"name":"Crunch 2","distoName":"standard","LCF":259,"HCF":12000,"K1":"2.0","K2":"2.0","K3":"3.9","K4":"3.9","F1":242,"F2":493,"F3":1780,"F4":4382,"Q1":"0.3","Q2":"12.6","Q3":"0.3","Q4":"2.8","OG":"10.0","BF":"8.1","MF":"4.5","TF":"2.9","PF":"9.8","EQ":[6,-5,-21,-3,-18,0],"MV":"8.2","RG":"1.2","CG":"8.7"}
+        preset11 = {"name": "Crunch 2", "distoName": "standard", "LCF": 259, "HCF": 12000, "K1": "2.0", "K2": "2.0", "K3": "3.9", "K4": "3.9", "F1": 242, "F2": 493, "F3": 1780, "F4": 4382, "Q1": "0.3", "Q2": "12.6", "Q3": "0.3", "Q4": "2.8", "OG": "10.0", "BF": "8.1", "MF": "4.5", "TF": "2.9", "PF": "9.8", "EQ": [6, -5, -21, -3, -18, 0], "MV": "8.2", "RG": "1.2", "CG": "8.7"}
         presets.push(preset11);
 
-        preset12 = {"name":"Noisy 1","distoName":"NoisyHiGain","LCF":46,"HCF":9788,"K1":"0.9","K2":"0.9","K3":"1.9","K4":"1.9","F1":242,"F2":493,"F3":1200,"F4":3500,"Q1":"0.3","Q2":"0.0","Q3":"0.3","Q4":"0.0","OG":"3.2","BF":"7.4","MF":"6.7","TF":"5.2","PF":"4.8","EQ":[8,1,13,16,-12,-19],"MV":"6.6","RG":"0.0","CG":"7.5"}
+        preset12 = {"name": "Noisy 1", "distoName": "NoisyHiGain", "LCF": 46, "HCF": 9788, "K1": "0.9", "K2": "0.9", "K3": "1.9", "K4": "1.9", "F1": 242, "F2": 493, "F3": 1200, "F4": 3500, "Q1": "0.3", "Q2": "0.0", "Q3": "0.3", "Q4": "0.0", "OG": "3.2", "BF": "7.4", "MF": "6.7", "TF": "5.2", "PF": "4.8", "EQ": [8, 1, 13, 16, -12, -19], "MV": "6.6", "RG": "0.0", "CG": "7.5"}
         presets.push(preset12);
 
-        preset13 = {"name":"Marshall Hi-Gain 2","distoName":"HiGainModern","LCF":200,"HCF":12000,"K1":"0.9","K2":"0.9","K3":"1.8","K4":"1.8","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"0.0","Q2":"49.0","Q3":"42.0","Q4":"11.0","OG":"3.0","BF":"5.0","MF":"5.0","TF":"0.1","PF":"5.0","EQ":[-2,-1,0,3,1,3],"MV":"0.3","RG":"2.0","CG":"2.0"}
+        preset13 = {"name": "Marshall Hi-Gain 2", "distoName": "HiGainModern", "LCF": 200, "HCF": 12000, "K1": "0.9", "K2": "0.9", "K3": "1.8", "K4": "1.8", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "0.0", "Q2": "49.0", "Q3": "42.0", "Q4": "11.0", "OG": "3.0", "BF": "5.0", "MF": "5.0", "TF": "0.1", "PF": "5.0", "EQ": [-2, -1, 0, 3, 1, 3], "MV": "0.3", "RG": "2.0", "CG": "2.0"}
         presets.push(preset13);
 
-        preset14 = {"name":"Clean 3","distoName":"smooth","LCF":200,"HCF":12000,"K1":"2.5","K2":"2.5","K3":"5.0","K4":"5.0","F1":242,"F2":493,"F3":1780,"F4":4382,"Q1":"0.3","Q2":"12.6","Q3":"0.3","Q4":"2.8","OG":"10.0","BF":"8.1","MF":"4.5","TF":"2.9","PF":"9.8","EQ":[6,-5,-21,-3,3,0],"MV":"9.8","RG":"3.7","CG":"4.6"}
+        preset14 = {"name": "Clean 3", "distoName": "smooth", "LCF": 200, "HCF": 12000, "K1": "2.5", "K2": "2.5", "K3": "5.0", "K4": "5.0", "F1": 242, "F2": 493, "F3": 1780, "F4": 4382, "Q1": "0.3", "Q2": "12.6", "Q3": "0.3", "Q4": "2.8", "OG": "10.0", "BF": "8.1", "MF": "4.5", "TF": "2.9", "PF": "9.8", "EQ": [6, -5, -21, -3, 3, 0], "MV": "9.8", "RG": "3.7", "CG": "4.6"}
         presets.push(preset14);
 
-        preset15 = {"name":"ELectro Acoustic","distoName":"smooth","LCF":200,"HCF":12000,"K1":"2.5","K2":"2.5","K3":"5.0","K4":"5.0","F1":242,"F2":493,"F3":1780,"F4":4382,"Q1":"0.3","Q2":"12.6","Q3":"0.3","Q4":"2.8","OG":"10.0","BF":"8.1","MF":"4.5","TF":"2.9","PF":"9.8","EQ":[6,-5,-21,-3,3,0],"MV":"8.2","RG":"3.7","CG":"4.6"}
+        preset15 = {"name": "ELectro Acoustic", "distoName": "smooth", "LCF": 200, "HCF": 12000, "K1": "2.5", "K2": "2.5", "K3": "5.0", "K4": "5.0", "F1": 242, "F2": 493, "F3": 1780, "F4": 4382, "Q1": "0.3", "Q2": "12.6", "Q3": "0.3", "Q4": "2.8", "OG": "10.0", "BF": "8.1", "MF": "4.5", "TF": "2.9", "PF": "9.8", "EQ": [6, -5, -21, -3, 3, 0], "MV": "8.2", "RG": "3.7", "CG": "4.6"}
         presets.push(preset15);
 
-        preset16 = {"name":"Heartbreak Riff","distoName":"standard","LCF":214,"HCF":15820,"K1":"4.1","K2":"4.1","K3":"8.2","K4":"8.2","F1":186,"F2":792,"F3":2402,"F4":4836,"Q1":"2.9","Q2":"0.7","Q3":"1.0","Q4":"1.0","OG":"0.8","BF":"4.8","MF":"6.0","TF":"5.9","PF":"8.9","EQ":[15,19,19,-2,17,-3],"MV":"2.1","RG":"1.2","CG":"7.4"}
+        preset16 = {"name": "Heartbreak Riff", "distoName": "standard", "LCF": 214, "HCF": 15820, "K1": "4.1", "K2": "4.1", "K3": "8.2", "K4": "8.2", "F1": 186, "F2": 792, "F3": 2402, "F4": 4836, "Q1": "2.9", "Q2": "0.7", "Q3": "1.0", "Q4": "1.0", "OG": "0.8", "BF": "4.8", "MF": "6.0", "TF": "5.9", "PF": "8.9", "EQ": [15, 19, 19, -2, 17, -3], "MV": "2.1", "RG": "1.2", "CG": "7.4"}
         presets.push(preset16);
 
-        preset17 = {"name":"Light My Knob","distoName":"superClean","LCF":256,"HCF":12000,"K1":"0.0","K2":"0.0","K3":"0.0","K4":"0.0","F1":147,"F2":569,"F3":2382,"F4":5696,"Q1":"0.0","Q2":"0.0","Q3":"0.0","Q4":"0.0","OG":"5.9","BF":"5.0","MF":"5.0","TF":"5.0","PF":"8.0","EQ":[-2,10,-10,-20,17,3],"MV":"6.5","RG":"2.0","CG":"6.7"}
+        preset17 = {"name": "Light My Knob", "distoName": "superClean", "LCF": 256, "HCF": 12000, "K1": "0.0", "K2": "0.0", "K3": "0.0", "K4": "0.0", "F1": 147, "F2": 569, "F3": 2382, "F4": 5696, "Q1": "0.0", "Q2": "0.0", "Q3": "0.0", "Q4": "0.0", "OG": "5.9", "BF": "5.0", "MF": "5.0", "TF": "5.0", "PF": "8.0", "EQ": [-2, 10, -10, -20, 17, 3], "MV": "6.5", "RG": "2.0", "CG": "6.7"}
         presets.push(preset17);
 
-        preset18 = {"name":"Gainsbourgh Funk","distoName":"superClean","LCF":345,"HCF":18461,"K1":"0.4","K2":"0.4","K3":"0.7","K4":"0.7","F1":186,"F2":792,"F3":2402,"F4":6368,"Q1":"0.0","Q2":"23.7","Q3":"1.0","Q4":"1.0","OG":"6.6","BF":"8.0","MF":"1.3","TF":"5.9","PF":"10.0","EQ":[12,-2,-10,-20,2,11],"MV":"10.0","RG":"2.0","CG":"4.2"}
+        preset18 = {"name": "Gainsbourgh Funk", "distoName": "superClean", "LCF": 345, "HCF": 18461, "K1": "0.4", "K2": "0.4", "K3": "0.7", "K4": "0.7", "F1": 186, "F2": 792, "F3": 2402, "F4": 6368, "Q1": "0.0", "Q2": "23.7", "Q3": "1.0", "Q4": "1.0", "OG": "6.6", "BF": "8.0", "MF": "1.3", "TF": "5.9", "PF": "10.0", "EQ": [12, -2, -10, -20, 2, 11], "MV": "10.0", "RG": "2.0", "CG": "4.2"}
         presets.push(preset18);
 
-        preset19 = {"name":"Revolution Beatles","distoName":"HiGainModern","LCF":200,"HCF":12000,"K1":"2.3","K2":"2.3","K3":"4.6","K4":"4.6","F1":147,"F2":569,"F3":1915,"F4":4680,"Q1":"1.9","Q2":"3.4","Q3":"4.2","Q4":"11.0","OG":"0.5","BF":"5.0","MF":"2.2","TF":"4.7","PF":"8.0","EQ":[-2,9,29,29,1,-3],"MV":"0.2","RG":"1.7","CG":"4.9"}
+        preset19 = {"name": "Revolution Beatles", "distoName": "HiGainModern", "LCF": 200, "HCF": 12000, "K1": "2.3", "K2": "2.3", "K3": "4.6", "K4": "4.6", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "1.9", "Q2": "3.4", "Q3": "4.2", "Q4": "11.0", "OG": "0.5", "BF": "5.0", "MF": "2.2", "TF": "4.7", "PF": "8.0", "EQ": [-2, 9, 29, 29, 1, -3], "MV": "0.2", "RG": "1.7", "CG": "4.9"}
         presets.push(preset19);
 
-        preset20 = {"name":"Noisy 2","distoName":"NoisyHiGain","LCF":289,"HCF":8720,"K1":"5.1","K2":"3.7","K3":"5.0","K4":"5.0","F1":91,"F2":548,"F3":1820,"F4":4535,"Q1":"4.3","Q2":"0.5","Q3":"0.3","Q4":"2.8","OG":"6.7","BF":"8.1","MF":"7.3","TF":"3.2","PF":"6.1","EQ":[9,-10,3,10,4,-17],"MV":"3.5","RG":"3.7","CG":"8.5"}
+        preset20 = {"name": "Noisy 2", "distoName": "NoisyHiGain", "LCF": 289, "HCF": 8720, "K1": "5.1", "K2": "3.7", "K3": "5.0", "K4": "5.0", "F1": 91, "F2": 548, "F3": 1820, "F4": 4535, "Q1": "4.3", "Q2": "0.5", "Q3": "0.3", "Q4": "2.8", "OG": "6.7", "BF": "8.1", "MF": "7.3", "TF": "3.2", "PF": "6.1", "EQ": [9, -10, 3, 10, 4, -17], "MV": "3.5", "RG": "3.7", "CG": "8.5"}
         presets.push(preset20);
 
-        preset21 = {"name":"Highway to Hell","distoName":"fuzz","boost":true,"LCF":214,"HCF":15820,"K1":"0.9","K2":"0.3","K3":"4.2","K4":"1.3","F1":83,"F2":838,"F3":1694,"F4":5782,"Q1":"2.9","Q2":"1.7","Q3":"2.7","Q4":"1.0","OG":"0.8","BF":"4.8","MF":"6.0","TF":"5.9","PF":"8.9","EQ":[15,16,19,-2,17,-3],"MV":"2.1","RN":"Fender Hot Rod","RG":"0.0","CN":"Vintage Marshall 1","CG":"6.0"};
+        preset21 = {"name": "Highway to Hell", "distoName": "fuzz", "boost": true, "LCF": 214, "HCF": 15820, "K1": "0.9", "K2": "0.3", "K3": "4.2", "K4": "1.3", "F1": 83, "F2": 838, "F3": 1694, "F4": 5782, "Q1": "2.9", "Q2": "1.7", "Q3": "2.7", "Q4": "1.0", "OG": "0.8", "BF": "4.8", "MF": "6.0", "TF": "5.9", "PF": "8.9", "EQ": [15, 16, 19, -2, 17, -3], "MV": "2.1", "RN": "Fender Hot Rod", "RG": "0.0", "CN": "Vintage Marshall 1", "CG": "6.0"};
         presets.push(preset21);
 
-        preset22 = {"name":"Love RnRoll","distoName":"smooth","boost":true,"LCF":214,"HCF":15820,"K1":"3.8","K2":"3.8","K3":"7.5","K4":"7.5","F1":186,"F2":792,"F3":2402,"F4":4836,"Q1":"2.9","Q2":"0.7","Q3":"1.0","Q4":"1.0","OG":"0.8","BF":"4.8","MF":"6.0","TF":"5.9","PF":"8.9","EQ":[15,19,19,-2,17,-3],"MV":"2.1","RN":"Fender Hot Rod","RG":"1.2","CN":"Vintage Marshall 1","CG":"7.4"};
+        preset22 = {"name": "Love RnRoll", "distoName": "smooth", "boost": true, "LCF": 214, "HCF": 15820, "K1": "3.8", "K2": "3.8", "K3": "7.5", "K4": "7.5", "F1": 186, "F2": 792, "F3": 2402, "F4": 4836, "Q1": "2.9", "Q2": "0.7", "Q3": "1.0", "Q4": "1.0", "OG": "0.8", "BF": "4.8", "MF": "6.0", "TF": "5.9", "PF": "8.9", "EQ": [15, 19, 19, -2, 17, -3], "MV": "2.1", "RN": "Fender Hot Rod", "RG": "1.2", "CN": "Vintage Marshall 1", "CG": "7.4"};
         presets.push(preset22);
+//console.log(JSON.stringify(presets));
 
-        presets.forEach(function (p, index) {
-            var option = document.createElement("option");
-            option.value = index;
-            option.text = p.name;
-            menuPresets.appendChild(option);
+
+
+        $.getJSON("http://localhost:8082/getAllPresets", function (data) {
+            console.log("success json import");
+            data.forEach(function (p, index) {
+                var option = document.createElement("option");
+                option.value = index;
+                option.text = p.name;
+                menuPresets.appendChild(option);
+            });
         });
+
+//console.log(JSON.stringify(allPresets()));
+
+
         menuPresets.onchange = changePreset;
     }
 
@@ -960,11 +970,12 @@ function Amp(context) {
     }
 
     function setPreset(p) {
-        if(p.distoName === undefined) {
+        if (p.distoName === undefined) {
             p.distoName = "standard";
         }
 
-        if(p.boost === undefined) p.boost = false;
+        if (p.boost === undefined)
+            p.boost = false;
         changeBoost(p.boost);
 
         changeLowCutFreqValue(p.LCF);
@@ -1003,21 +1014,22 @@ function Amp(context) {
         changeEQValues(p.EQ);
 
 
-       changeDistoTypeFromPreset(p.distoName);
+        changeDistoTypeFromPreset(p.distoName);
     }
 
     function getPresets() {
         return presets;
     }
 
-    function setDefaultPreset() {
-        setPreset(preset1);
-    }
+    /* function setDefaultPreset() {
+     
+     setPreset(preset1);
+     }*/
 
     function printCurrentAmpValues() {
         var currentPresetValue = {
             name: 'current',
-            distoName : currentDistoName,
+            distoName: currentDistoName,
             boost: boost.isActivated(),
             LCF: lowCutFilter.frequency.value,
             HCF: hiCutFilter.frequency.value,
@@ -1033,7 +1045,7 @@ function Amp(context) {
             Q2: filters[1].Q.value.toFixed(1),
             Q3: filters[2].Q.value.toFixed(1),
             Q4: filters[3].Q.value.toFixed(1),
-            OG: (outputGain.gain.value*10).toFixed(1),
+            OG: (outputGain.gain.value * 10).toFixed(1),
             BF: ((bassFilter.gain.value / 3) + 5).toFixed(1), // bassFilter.gain.value = (value-5) * 3;
             MF: ((midFilter.gain.value / 2) + 5).toFixed(1), // midFilter.gain.value = (value-5) * 2;
             TF: ((trebleFilter.gain.value / 5) + 5).toFixed(1), // trebleFilter.gain.value = (value-5) * 5;
@@ -1041,34 +1053,29 @@ function Amp(context) {
             EQ: eq.getValues(),
             MV: masterVolume.gain.value.toFixed(1),
             RN: reverb.getName(),
-            RG: (reverb.getGain()*10).toFixed(1),
+            RG: (reverb.getGain() * 10).toFixed(1),
             CN: cabinetSim.getName(),
-            CG: (cabinetSim.getGain()*10).toFixed(1)
-       };
+            CG: (cabinetSim.getGain() * 10).toFixed(1)
+        };
 
-       console.log(JSON.stringify(currentPresetValue));
+        console.log(JSON.stringify(currentPresetValue));
     }
-    
-    
-        function senddata() {
-     
-    console.log("lalalalala");
-    var data = {};
-	data.title = "title";
-	data.message = "message";
-     
-    $.ajax({
-       url: 'http://localhost:8082/listAllPresets',
-       type: 'POST',
-       data: JSON.stringify(getPresets()),
-       contentType: 'application/json',
-       success: function(data) {
-                            console.log('success');
-                            console.log(JSON.stringify(data));
-                        }
-   });
 
- }
+
+    function senddata() {
+
+        $.ajax({
+            url: 'http://localhost:8082/listAllPresets',
+            type: 'POST',
+            data: JSON.stringify(getPresets()),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('success');
+                console.log(JSON.stringify(data));
+            }
+        });
+
+    }
 
     // END PRESETS
 
@@ -1091,11 +1098,11 @@ function Amp(context) {
 
         //onOffButton.checked = cb.checked;
         var onOffSwitch = document.querySelector("#switch1");
-        if(cb.checked) {
-            onOffSwitch.setValue(0,false);
+        if (cb.checked) {
+            onOffSwitch.setValue(0, false);
             led.setValue(1, false);
         } else {
-            onOffSwitch.setValue(1,false);
+            onOffSwitch.setValue(1, false);
             led.setValue(0, false);
         }
     }
@@ -1119,10 +1126,10 @@ function Amp(context) {
 
         //onOffButton.checked = cb.checked;
         var eqOnOffSwitch = document.querySelector("#switch2");
-        if(cb.checked) {
-            eqOnOffSwitch.setValue(0,false);
+        if (cb.checked) {
+            eqOnOffSwitch.setValue(0, false);
         } else {
-            eqOnOffSwitch.setValue(1,false);
+            eqOnOffSwitch.setValue(1, false);
         }
     }
 
@@ -1130,18 +1137,18 @@ function Amp(context) {
     return {
         input: input,
         output: output,
-        boostOnOff:boostOnOff,
+        boostOnOff: boostOnOff,
         eq: eq,
         reverb: reverb,
         cabinet: cabinetSim,
         changeInputGainValue: changeInputGainValue,
-        changeOutputGainValue:changeOutputGainValue,
+        changeOutputGainValue: changeOutputGainValue,
         changeLowCutFreqValue: changeLowCutFreqValue,
         changeHicutFreqValue: changeHicutFreqValue,
-        changeBassFilterValue : changeBassFilterValue,
-        changeMidFilterValue : changeMidFilterValue,
-        changeTrebleFilterValue : changeTrebleFilterValue,
-        changePresenceFilterValue : changePresenceFilterValue,
+        changeBassFilterValue: changeBassFilterValue,
+        changeMidFilterValue: changeMidFilterValue,
+        changeTrebleFilterValue: changeTrebleFilterValue,
+        changePresenceFilterValue: changePresenceFilterValue,
         changeDrive: changeDrive,
         changeDistorsionValues: changeDistorsionValues,
         changeOversampling: changeOversampling,
@@ -1152,11 +1159,11 @@ function Amp(context) {
         changeReverbGain: changeReverbGain,
         changeRoom: changeRoom,
         changeEQValues: changeEQValues,
-        setDefaultPreset: setDefaultPreset,
+        // setDefaultPreset: setDefaultPreset,
         getPresets: getPresets,
         senddata: senddata,
         setPreset: setPreset,
-        printCurrentAmpValues : printCurrentAmpValues,
+        printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,
         bypassEQ: bypassEQ
     };
@@ -1164,37 +1171,37 @@ function Amp(context) {
 }
 
 var reverbImpulses = [
-        {
-            name: "Fender Hot Rod",
-            url: "assets/impulses/reverb/cardiod-rear-levelled.wav"
-        },
-        {
-            name: "PCM 90 clean plate",
-            url: "assets/impulses/reverb/pcm90cleanplate.wav"
-        },
-        {
-            name: "Scala de Milan",
-            url: "assets/impulses/reverb/ScalaMilanOperaHall.wav"
-        }
-    ];
+    {
+        name: "Fender Hot Rod",
+        url: "assets/impulses/reverb/cardiod-rear-levelled.wav"
+    },
+    {
+        name: "PCM 90 clean plate",
+        url: "assets/impulses/reverb/pcm90cleanplate.wav"
+    },
+    {
+        name: "Scala de Milan",
+        url: "assets/impulses/reverb/ScalaMilanOperaHall.wav"
+    }
+];
 var cabinetImpulses = [
-        {
-            name: "Vintage Marshall 1",
-            url: "assets/impulses/cabinet/Block%20Inside.wav"
-        },
-        {
-            name: "Vox Custom Bright 4x12 M930 Axis 1",
-            url: "assets/impulses/cabinet/voxCustomBrightM930OnAxis1.wav"
-        },
-        {
-            name: "Fender Champ, axis",
-            url: "assets/impulses/cabinet/FenderChampAxisStereo.wav"
-        },
-        {
-            name: "Marshall 1960, axis",
-            url: "assets/impulses/cabinet/Marshall1960.wav"
-        }    
-    ];
+    {
+        name: "Vintage Marshall 1",
+        url: "assets/impulses/cabinet/Block%20Inside.wav"
+    },
+    {
+        name: "Vox Custom Bright 4x12 M930 Axis 1",
+        url: "assets/impulses/cabinet/voxCustomBrightM930OnAxis1.wav"
+    },
+    {
+        name: "Fender Champ, axis",
+        url: "assets/impulses/cabinet/FenderChampAxisStereo.wav"
+    },
+    {
+        name: "Marshall 1960, axis",
+        url: "assets/impulses/cabinet/Marshall1960.wav"
+    }
+];
 // ------- CONVOLVER, used for both reverb and cabinet simulation -------------------
 function Convolver(context, impulses, menuId) {
     var convolverNode, convolverGain, directGain;
@@ -1226,30 +1233,30 @@ function Convolver(context, impulses, menuId) {
     buildAudioGraphConvolver();
     setGain(0.2);
     loadImpulseByUrl(defaultImpulseURL);
-    
+
 
     function loadImpulseByUrl(url) {
         // Load default impulse
-        const samples = Promise.all([loadSample(context,url)]).then(setImpulse);
+        const samples = Promise.all([loadSample(context, url)]).then(setImpulse);
     }
 
     function loadImpulseByName(name) {
-        if(name === undefined) {
+        if (name === undefined) {
             name = IRs[0].name;
             console.log("loadImpulseByName: name undefined, loading default impulse " + name);
         }
 
-        var url="none";
+        var url = "none";
         // get url corresponding to name
-        for(var i=0; i < IRs.length; i++) {
-            if(IRs[i].name === name) {
+        for (var i = 0; i < IRs.length; i++) {
+            if (IRs[i].name === name) {
                 url = IRs[i].url;
                 currentImpulse = IRs[i];
                 menuIRs.value = i;
                 break;
             }
         }
-        if(url === "none") {
+        if (url === "none") {
             console.log("ERROR loading reverb impulse name = " + name);
         } else {
             console.log("loadImpulseByName loading " + currentImpulse.name);
@@ -1265,7 +1272,7 @@ function Convolver(context, impulses, menuId) {
     }
 
     function setImpulse(param) {
-     // we get here only when the impulse is loaded and decoded
+        // we get here only when the impulse is loaded and decoded
         console.log("impulse loaded and decoded");
         convolverNode.buffer = param[0];
         console.log("convolverNode.buffer set with the new impulse (loaded and decoded");
@@ -1320,13 +1327,13 @@ function Convolver(context, impulses, menuId) {
         output: outputGain,
         setGain: setGain,
         getGain: getGain,
-        getName:getName,
+        getName: getName,
         loadImpulseByName: loadImpulseByName
     };
 }
 
 // Booster, useful to add a "Boost channel"
-var Boost = function(context) {
+var Boost = function (context) {
     // Booster not activated by default
     var activated = false;
 
@@ -1359,20 +1366,21 @@ var Boost = function(context) {
     }
 
     function onOff(wantedState) {
-        if(wantedState === undefined) {
+        if (wantedState === undefined) {
             // do not boost
-            if(activated) toggle();
+            if (activated)
+                toggle();
             return;
         }
         var currentState = activated;
 
-        if(wantedState !== currentState) {
+        if (wantedState !== currentState) {
             toggle();
         }
     }
 
     function toggle() {
-        if(!activated) {
+        if (!activated) {
             byPass.gain.value = 0;
             inputGain.gain.value = 1;
         } else {
@@ -1399,12 +1407,12 @@ var Boost = function(context) {
     }
     // API
     return {
-        input:input,
-        output:output,
+        input: input,
+        output: output,
         onOff: onOff,
-        toggle:toggle,
+        toggle: toggle,
         isActivated: isActivated,
         setOversampling: setOversampling
     };
 };
- 
+
