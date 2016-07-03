@@ -1062,7 +1062,7 @@ function Amp(context) {
     }
 
 
-    function senddata() {
+    function sendData() {
 
         $.ajax({
             url: 'http://localhost:8082/listAllPresets',
@@ -1161,7 +1161,7 @@ function Amp(context) {
         changeEQValues: changeEQValues,
         // setDefaultPreset: setDefaultPreset,
         getPresets: getPresets,
-        senddata: senddata,
+        sendData: sendData,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,
