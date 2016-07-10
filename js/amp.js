@@ -806,8 +806,8 @@ function Amp(context) {
     // --------
     function initPresets() {
         // updated 10/4/2016
-       preset1 = {"name": "Clean 1", "distoName": "standard", "boost": false, "LCF": 200, "HCF": 12000, "K1": "0.0", "K2": "0.0", "K3": "0.0", "K4": "0.0", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "0.0", "Q2": "49.0", "Q3": "42.0", "Q4": "11.0", "OG": "5.0", "BF": "5.0", "MF": "4.2", "TF": "3.1", "PF": "5.0", "EQ": [-2, -1, 0, 3, -9, -4], "MV": "5.8", "RN": "Fender Hot Rod", "RG": "2.0", "CN": "Vintage Marshall 1", "CG": "2.0"};
-        presets.push(preset1);
+       //preset1 = {"name": "Clean 1", "distoName": "standard", "boost": false, "LCF": 200, "HCF": 12000, "K1": "0.0", "K2": "0.0", "K3": "0.0", "K4": "0.0", "F1": 147, "F2": 569, "F3": 1915, "F4": 4680, "Q1": "0.0", "Q2": "49.0", "Q3": "42.0", "Q4": "11.0", "OG": "5.0", "BF": "5.0", "MF": "4.2", "TF": "3.1", "PF": "5.0", "EQ": [-2, -1, 0, 3, -9, -4], "MV": "5.8", "RN": "Fender Hot Rod", "RG": "2.0", "CN": "Vintage Marshall 1", "CG": "2.0"};
+        //presets.push(preset1);
         
         
         /* fetch('/getAllPresets')
@@ -823,9 +823,15 @@ function Amp(context) {
           });
         
         //presets = getJsonPresets('/getAllPresets');*/
+            var request = new XMLHttpRequest();
+            request.open('GET', '/getAllPresets', false);  // `false` makes the request synchronous
+            request.send(null);
 
-
-        
+            if (request.status === 200) {
+              console.log(request.responseText);
+            }
+            //console.log('get 2 ', request.responseText);
+            presets=JSON.parse(request.responseText);
         
 //presets = PresetsList;
            // console.log('presets 2 ', presets);
