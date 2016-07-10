@@ -3,8 +3,10 @@
 
 // We need to use the express framework: have a real web servler that knows how to send mime types etc.
 var express = require('express');
+var fs = require('fs');
 var myParser = require("body-parser");
 var fetch = require('node-fetch');
+
 
 // Init globals variables for each module required
 var app = express()
@@ -30,6 +32,9 @@ app.post('/addPreset', function (req, res) {
   	console.log('body: ' + JSON.stringify(req.body));
         res.send('POST');
         console.log("J'ai reçu cela");
+        
+   
+        
 });
 
 app.get('/getAllPresets', function (req, res) {
@@ -40,8 +45,8 @@ app.put('/', function (req, res) {
     res.send("J'ai modifié");
 });
 
-app.delete('/', function (req, res) {
-    res.send("J'ai supprimé ");
+app.delete('/delPreset', function (req, res) {
+    console.log("J'ai Supprimé : "+req.body);
 });
 
 // launch the http server on given port
