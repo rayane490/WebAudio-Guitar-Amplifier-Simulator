@@ -310,7 +310,7 @@ function Amp(context) {
         buildGraph();
         initPresets();
 
-        //setDefaultPreset();
+        setDefaultPreset();
         console.log("running");
     }
 
@@ -1023,10 +1023,10 @@ function Amp(context) {
         return presets;
     }
 
-    /* function setDefaultPreset() {
+     function setDefaultPreset() {
      
      setPreset(preset1);
-     }*/
+     }
 
     function printCurrentAmpValues() {
         var currentPresetValue = {
@@ -1193,7 +1193,7 @@ function Amp(context) {
         changeReverbGain: changeReverbGain,
         changeRoom: changeRoom,
         changeEQValues: changeEQValues,
-        // setDefaultPreset: setDefaultPreset,
+        setDefaultPreset: setDefaultPreset,
         getPresets: getPresets,
         sendData: sendData,
         setPreset: setPreset,
