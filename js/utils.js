@@ -33,3 +33,13 @@ function loadSample(audioContext, url){
     });
 }
 
+function getJsonPresets(url){
+   return new Promise(function(resolve, reject){
+       fetch(url)  
+  .then(response => {return response.json()}) 
+  .then(result => { 
+    resolve(result);
+  });
+  
+   });
+}
