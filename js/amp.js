@@ -977,11 +977,12 @@ function Amp(context) {
  function deleteData() {
      var name = menuPresets.options[menuPresets.selectedIndex].text;
      
-     fetch('/deletePreset', {
-      method: 'DELETE',
-      body: name
-      
-        });
+     
+    fetch('/delPreset', {
+         method: 'DELETE',
+         body: name
+       });
+          
      console.log(name) ;  
      
  }
