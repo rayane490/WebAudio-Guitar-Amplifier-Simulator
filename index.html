@@ -194,7 +194,8 @@
                     <webaudio-switch id="led" style="position:absolute;left:1043px;top:125px" src="img/led_23_red.png" value="1" height="23" width="23" tooltip="Switch-B"></webaudio-switch>
                     <webaudio-switch id="switch2" style="position:absolute;left:1033px;top:140px" src="img/switch_toggle.png" value="0" height="45" width="45" tooltip="Switch-B"></webaudio-switch>
                     <button  style="position:absolute;left:570px;top:270px" type="button" onclick="amp.printCurrentAmpValues();">Show current settings in console</button>
-                    <button id="senddata" style="position:absolute;left:570px;top:430px" type="button" method="POST" onclick="amp.sendData();" >Button JSON</button>
+                    <button id="senddata" style="position:absolute;left:570px;top:430px" type="button" method="POST" onclick="amp.sendData();" >Add Preset</button>
+                    <button id="deletedata" style="position:absolute;left:680px;top:430px" type="button" method="DELETE" onclick="amp.deleteData();" >Delete Preset</button>
                     <button  id="toggleGuitarIn" style="position:absolute;left:570px;top:300px" class="pulse"  type="button" onclick="toggleGuitarInput(event)">Guitar input: <span style='color:red;'>NOT ACTIVATED</span>, click to toggle on/off!</button>
                     <webaudio-knob id="Knob9"   style="position:absolute;left:570px;top:350px" src="img/Prophet.png" value="1" default="1" min="0" max="10" step="0.1" diameter="49" sprites="99" tooltip="InputGain"></webaudio-knob>
 

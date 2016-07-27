@@ -810,41 +810,22 @@ function Amp(context) {
         //presets.push(preset1);
         
         
-        /* fetch('/getAllPresets')
+         fetch('/getAllPresets')
           .then(function(response) {
             return response.json();
           }).then(function(json) {
-             //const PresetsList = json;
+             presets = json;
              
-              console.log('presets 1 ', JSON.stringify(presets));
-           // console.log('parsed json', JSON.stringify(json));
-          }).catch(function(ex) {
-            console.log('parsing failed', ex);
-          });
-        
-        //presets = getJsonPresets('/getAllPresets');*/
-            var request = new XMLHttpRequest();
-            request.open('GET', '/getAllPresets', false);  // `false` makes the request synchronous
-            request.send(null);
-
-            if (request.status === 200) {
-              console.log(request.responseText);
-            }
-            //console.log('get 2 ', request.responseText);
-            presets=JSON.parse(request.responseText);
-        
-//presets = PresetsList;
-           // console.log('presets 2 ', presets);
-            presets.forEach(function (p, index) {
+             presets.forEach(function (p, index) {
                 var option = document.createElement("option");
                 option.value = index;
                 option.text = p.name;
                 menuPresets.appendChild(option);
             });
-        
-
-//console.log(JSON.stringify(allPresets()));
-
+             
+          }).catch(function(ex) {
+            console.log('parsing failed', ex);
+          });
 
         menuPresets.onchange = changePreset;
     }
@@ -992,6 +973,18 @@ function Amp(context) {
     });
 
  }
+ 
+ function deleteData() {
+     var name = menuPresets.options[menuPresets.selectedIndex].text;
+     
+     fetch('/deletePreset', {
+      method: 'DELETE',
+      body: name
+      
+        });
+     console.log(name) ;  
+     
+ }
 
     // END PRESETS
 
@@ -1078,6 +1071,7 @@ function Amp(context) {
         setDefaultPreset: setDefaultPreset,
         getPresets: getPresets,
         sendData: sendData,
+        deleteData: deleteData,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,
