@@ -46,7 +46,8 @@ app.put('/', function (req, res) {
 });
 
 app.delete('/delPreset', function (req, res) {
-    console.log("J'ai Supprimé : "+req.body);
+    res.send('DELETE');
+    console.log("J'ai Supprimé : " + req.body);
 });
 
 // launch the http server on given port
