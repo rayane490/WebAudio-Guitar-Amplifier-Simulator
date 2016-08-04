@@ -51,8 +51,25 @@ app.get('/', function (req, res) {
 
 app.post('/addPreset', function (req, res) {
 
-  	console.log('body: ' + JSON.stringify(req.body));
-        res.send('POST');
+
+   var db = req.db;
+    var collection = db.get('presets');
+    
+    // Submit to the DB
+    collection.insert(req.body, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+           // res.redirect(__dirname + '/index.html');
+           res.redirect(__dirname + '/index.html');
+           console.log("Je suis là");
+        }
+    });
+  	//console.log('body: ' + JSON.stringify(req.body));
+        //res.send('POST');
         console.log("J'ai reçu cela");
         
    
@@ -65,7 +82,7 @@ app.get('/getAllPresets', function (req, res) {
    var db = req.db;
     var collection = db.get('presets');
     collection.find({},{},function(e,docs){
-        console.log(docs);
+       // console.log(docs);
         res.send(docs);
         //res.render(docs);
     });
