@@ -6,6 +6,12 @@ var express = require('express');
 var fs = require('fs');
 var myParser = require("body-parser");
 var fetch = require('node-fetch');
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/presets');
 
 
 // Init globals variables for each module required
@@ -21,6 +27,22 @@ var app = express()
     app.use(express.static(__dirname + '/'));  
     app.use(myParser.json());
     app.use(myParser.urlencoded({extended : true}));
+    
+// Make our db accessible to our router
+    app.use(function(req,res,next){
+    req.db = db;
+    next();
+    });
+
+//Mongodb
+/*var url = 'mongodb://localhost:27017/test';
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected correctly to server.");
+  db.close();
+});*/
+
+
 
 // routing
 app.get('/', function (req, res) {
@@ -38,7 +60,15 @@ app.post('/addPreset', function (req, res) {
 });
 
 app.get('/getAllPresets', function (req, res) {
-    res.sendfile(__dirname + '/allPresets.json');
+   // res.sendfile(__dirname + '/allPresets.json');
+   
+   var db = req.db;
+    var collection = db.get('presets');
+    collection.find({},{},function(e,docs){
+        console.log(docs);
+        res.send(docs);
+        //res.render(docs);
+    });
 });
 
 app.put('/', function (req, res) {
