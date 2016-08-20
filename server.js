@@ -93,8 +93,11 @@ app.put('/', function (req, res) {
 });
 
 app.delete('/delPreset', function (req, res) {
-    res.send('DELETE');
-    console.log("J'ai Supprimé : " + req.body);
+    //res.send('DELETE');
+    var db = req.db;
+    var collection = db.get('presets');
+    collection.remove(req.body);
+    console.log("J'ai Supprimé : " + JSON.stringify(req.body)); 
 });
 
 // launch the http server on given port

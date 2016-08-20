@@ -975,15 +975,20 @@ function Amp(context) {
  }
  
  function deleteData() {
-     var name = menuPresets.options[menuPresets.selectedIndex].text;
+     var presetName = menuPresets.options[menuPresets.selectedIndex].text;
      
+     var currentPresetName = {name: presetName};
      
     fetch('/delPreset', {
          method: 'DELETE',
-         body: name
+         headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+         body: JSON.stringify(currentPresetName)
        });
           
-     console.log(name) ;  
+     console.log(currentPresetName);  
      
  }
 
