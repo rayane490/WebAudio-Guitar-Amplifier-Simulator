@@ -975,6 +975,7 @@ function Amp(context) {
  }
  
  function updateData() {
+
      var currentPreset = {
             name: menuPresets.options[menuPresets.selectedIndex].text,
             distoName : currentDistoName,

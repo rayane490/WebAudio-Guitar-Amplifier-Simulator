@@ -79,7 +79,7 @@ app.post('/addPreset', function (req, res) {
 app.get('/getAllPresets', function (req, res) {
    // res.sendfile(__dirname + '/allPresets.json');
    
-   var db = req.db;
+    var db = req.db;
     var collection = db.get('presets');
     collection.find({},{},function(e,docs){
        // console.log(docs);
@@ -89,7 +89,14 @@ app.get('/getAllPresets', function (req, res) {
 });
 
 app.put('/updatePreset', function (req, res) {
-    res.send("J'ai modifié");
+    var db = req.db;
+    var collection = db.get('presets');
+    var parsedCollec = req.body;
+    var name = parsedCollec["name"];
+    collection.update({"name" : name}, {$set : req.body } );
+    console.log("J'ai modifié " + name + " : " + JSON.stringify(req.body)); 
+
+    
 });
 
 app.delete('/delPreset', function (req, res) {
