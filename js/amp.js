@@ -974,6 +974,48 @@ function Amp(context) {
 
  }
  
+ function updateData() {
+     var currentPreset = {
+            name: menuPresets.options[menuPresets.selectedIndex].text,
+            distoName : currentDistoName,
+            boost: boost.isActivated(),
+            LCF: lowCutFilter.frequency.value,
+            HCF: hiCutFilter.frequency.value,
+            K1: getDistorsionValue(0),
+            K2: getDistorsionValue(1),
+            K3: getDistorsionValue(2),
+            K4: getDistorsionValue(3),
+            F1: filters[0].frequency.value,
+            F2: filters[1].frequency.value,
+            F3: filters[2].frequency.value,
+            F4: filters[3].frequency.value,
+            Q1: filters[0].Q.value.toFixed(1),
+            Q2: filters[1].Q.value.toFixed(1),
+            Q3: filters[2].Q.value.toFixed(1),
+            Q4: filters[3].Q.value.toFixed(1),
+            OG: (outputGain.gain.value*10).toFixed(1),
+            BF: ((bassFilter.gain.value / 3) + 5).toFixed(1), // bassFilter.gain.value = (value-5) * 3;
+            MF: ((midFilter.gain.value / 2) + 5).toFixed(1), // midFilter.gain.value = (value-5) * 2;
+            TF: ((trebleFilter.gain.value / 5) + 5).toFixed(1), // trebleFilter.gain.value = (value-5) * 5;
+            PF: ((presenceFilter.gain.value / 2) + 5).toFixed(1), // presenceFilter.gain.value = (value-5) * 2;
+            EQ: eq.getValues(),
+            MV: masterVolume.gain.value.toFixed(1),
+            RN: reverb.getName(),
+            RG: (reverb.getGain()*10).toFixed(1),
+            CN: cabinetSim.getName(),
+            CG: (cabinetSim.getGain()*10).toFixed(1)
+       };
+       
+       fetch('/updatePreset', {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(currentPreset)
+      });
+ }
+ 
  function deleteData() {
      var presetName = menuPresets.options[menuPresets.selectedIndex].text;
      
@@ -1077,6 +1119,7 @@ function Amp(context) {
         setDefaultPreset: setDefaultPreset,
         getPresets: getPresets,
         sendData: sendData,
+        updateData: updateData,
         deleteData: deleteData,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,

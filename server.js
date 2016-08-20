@@ -88,7 +88,7 @@ app.get('/getAllPresets', function (req, res) {
     });
 });
 
-app.put('/', function (req, res) {
+app.put('/updatePreset', function (req, res) {
     res.send("J'ai modifié");
 });
 
