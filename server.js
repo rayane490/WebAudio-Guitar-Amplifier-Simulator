@@ -98,7 +98,7 @@ app.post('/addPreset', function (req, res) {
             // And forward to success page
            // res.redirect(__dirname + '/index.html');
            
-           console.log("Je suis là");
+           console.log(req.body);
         }
     });
   	//console.log('body: ' + JSON.stringify(req.body));
@@ -161,7 +161,9 @@ app.post('/login',
   passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/loginFailure'
-  }));
+  }),function(req, res){
+	console.log(res.user.username);
+});
   
 /* Handle Logout */
 app.get('/signout', function(req, res) {

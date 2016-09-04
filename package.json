@@ -5,6 +5,14 @@
   "main": "server.js",
   "dependencies": {
     "express": "~4.13.4",
+    "body-parser": "*",
+    "mongodb": "*",
+    "assert": "*",
+    "passport-local": "*",
+    "passport": "*",
+    "express-session": "*",
+    "fs": "*",
+    "monk": "*",
     "node-fetch": "^1.5.3"
   },
   "devDependencies": {},
