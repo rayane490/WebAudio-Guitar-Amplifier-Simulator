@@ -974,6 +974,15 @@ function Amp(context) {
 
  }
  
+ function signOut() {
+        
+     
+    fetch('/signout', {
+      method: 'GET'
+    });
+
+ }
+ 
  function updateData() {
 
      var currentPreset = {
@@ -1121,6 +1130,7 @@ function Amp(context) {
         getPresets: getPresets,
         sendData: sendData,
         updateData: updateData,
+        signOut: signOut,
         deleteData: deleteData,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
