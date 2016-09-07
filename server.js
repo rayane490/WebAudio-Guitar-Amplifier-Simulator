@@ -5,6 +5,7 @@
 var express = require('express');
 var fs = require('fs');
 var myParser = require("body-parser");
+var connect = require('connect');
 var fetch = require('node-fetch');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -12,6 +13,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/presets');
+var session = require('express-session');
+var cookieSession = require('cookie-session');
 var passport = require('passport');
 
 // Init globals variables for each module required
@@ -27,8 +30,12 @@ var app = express()
     app.use(express.static(__dirname + '/'));  
     app.use(myParser.json());
     app.use(myParser.urlencoded({extended : true}));
-     var session = require('express-session');
-    app.use(session({secret: "testwebaudio"}));
+     app.use(cookieSession({
+  keys: ['key1', 'key2']
+}));
+app.use(session({secret: '1234567890QWERTY'}));
+   // app.use(session({secret: 'webaudio',resave: true,saveUninitialized: true}));
+   //app.use(session({  secret: 'webaudio'}));
     app.use(passport.initialize());
     app.use(passport.session()); 
 // Make our db accessible to our router
@@ -50,8 +57,14 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+/*passport.deserializeUser(function(user, done) {
   done(null, user);
+});*/
+
+passport.deserializeUser(function(id, done) {
+  Users.findOne(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 passport.use(new LocalStrategy(
@@ -62,7 +75,7 @@ passport.use(new LocalStrategy(
 		function(err, user) {
 			if (err) { return done(err); }
 			if (!user) { return done(null, false); }
-			if (user.password != password) { return done(null, false); }
+			if (user.password !== password) { return done(null, false); }
 			return done(null, user);
 		});
     
@@ -73,7 +86,7 @@ var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
     return next();
   res.redirect('/');
-}
+};
 
 
 // routing
@@ -84,10 +97,10 @@ app.get('/', passport.authenticate('local', {
 
 app.post('/addPreset', function (req, res) {
 
-
+     //    var parseduser = req.user;
+   // var name = parseduser["username"];
    var db = req.db;
     var collection = db.get('presets');
-    
     // Submit to the DB
     collection.insert(req.body, function (err, doc) {
         if (err) {
@@ -111,7 +124,7 @@ app.post('/addPreset', function (req, res) {
 
 app.get('/getAllPresets', function (req, res) {
    // res.sendfile(__dirname + '/allPresets.json');
-   
+
     var db = req.db;
     var collection = db.get('presets');
     collection.find({},{},function(e,docs){
@@ -138,7 +151,7 @@ app.delete('/delPreset', function (req, res) {
     var collection = db.get('presets');
     collection.remove(req.body);
     console.log("J'ai Supprimé : " + JSON.stringify(req.body));
-    res.redirect(__dirname + '/');
+    res.sendfile(__dirname + '/home.html');
 });
 
 app.get('/auth', function(req, res, next) {
@@ -147,6 +160,12 @@ app.get('/auth', function(req, res, next) {
 
 app.get('/home',isAuthenticated, function(req, res) {
   res.sendfile(__dirname + '/home.html');
+
+  console.log("user json"+JSON.stringify(req.user));
+  
+      var parsedCollec = req.user;
+    var name = parsedCollec["username"];
+console.log("true user "+name);
 });
 
 app.get('/loginFailure' , function(req, res, next){
@@ -167,9 +186,14 @@ app.post('/login',
   
 /* Handle Logout */
 app.get('/signout', function(req, res) {
-  req.logout();
+  req.logOut();
+
+    res.redirect('/');
+// session updated 
+
   console.log("out");
-  res.redirect('/');
+  //res.sendfile(__dirname + '/home.html');
+  //isAuthenticated;
 });
 // launch the http server on given port
 server.listen(8082);
