@@ -1044,6 +1044,17 @@ function Amp(context) {
      
  }
 
+//screen
+//
+
+function screenPage(){
+    html2canvas(document.body, {
+  onrendered: function(canvas) {
+    document.body.appendChild(canvas);
+  }
+});
+    console.log("screeeen");
+}
     // END PRESETS
 
     function bypass(cb) {
@@ -1132,6 +1143,7 @@ function Amp(context) {
         updateData: updateData,
         signOut: signOut,
         deleteData: deleteData,
+        screenPage: screenPage,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,
