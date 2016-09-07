@@ -5,6 +5,7 @@
 var express = require('express');
 var fs = require('fs');
 var myParser = require("body-parser");
+var connect = require('connect');
 var fetch = require('node-fetch');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -13,6 +14,7 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/presets');
 var session = require('express-session');
+var cookieSession = require('cookie-session');
 var passport = require('passport');
 
 // Init globals variables for each module required
@@ -28,11 +30,12 @@ var app = express()
     app.use(express.static(__dirname + '/'));  
     app.use(myParser.json());
     app.use(myParser.urlencoded({extended : true}));
-     
-   // app.use(session({secret: 'webaudio',resave: true,saveUninitialized: true}));
-   app.use(session({
-  secret: 'webaudio'
+     app.use(cookieSession({
+  keys: ['key1', 'key2']
 }));
+app.use(session({secret: '1234567890QWERTY'}));
+   // app.use(session({secret: 'webaudio',resave: true,saveUninitialized: true}));
+   //app.use(session({  secret: 'webaudio'}));
     app.use(passport.initialize());
     app.use(passport.session()); 
 // Make our db accessible to our router
@@ -72,7 +75,7 @@ passport.use(new LocalStrategy(
 		function(err, user) {
 			if (err) { return done(err); }
 			if (!user) { return done(null, false); }
-			if (user.password != password) { return done(null, false); }
+			if (user.password !== password) { return done(null, false); }
 			return done(null, user);
 		});
     
@@ -83,7 +86,7 @@ var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
     return next();
   res.redirect('/');
-}
+};
 
 
 // routing
@@ -182,10 +185,10 @@ app.post('/login',
 /* Handle Logout */
 app.get('/signout', function(req, res) {
   req.logOut();
-  req.session.destroy(function(err) {
+
     res.redirect('/');
 // session updated 
-});
+
   console.log("out");
   //res.sendfile(__dirname + '/home.html');
   //isAuthenticated;
