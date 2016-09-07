@@ -1,0 +1,23 @@
+/* -- Auth page style -- */
+
+body {
+    max-width: 99%;
+    background-image: url(../img/background.jpeg);
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+}
+
+.auth-connect-form {
+    margin-top: 8%;
+}
+
+.auth-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.auth-title h1 {
+    font-size: 5em;
+    color: white;
+    text-shadow: 1px 1px 2px #333;
+}
