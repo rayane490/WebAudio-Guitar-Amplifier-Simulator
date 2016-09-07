@@ -12,6 +12,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/presets');
+var session = require('express-session');
 var passport = require('passport');
 
 // Init globals variables for each module required
@@ -27,8 +28,11 @@ var app = express()
     app.use(express.static(__dirname + '/'));  
     app.use(myParser.json());
     app.use(myParser.urlencoded({extended : true}));
-     var session = require('express-session');
-    app.use(session({secret: "testwebaudio"}));
+     
+   // app.use(session({secret: 'webaudio',resave: true,saveUninitialized: true}));
+   app.use(session({
+  secret: 'webaudio'
+}));
     app.use(passport.initialize());
     app.use(passport.session()); 
 // Make our db accessible to our router
@@ -50,8 +54,14 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+/*passport.deserializeUser(function(user, done) {
   done(null, user);
+});*/
+
+passport.deserializeUser(function(id, done) {
+  Users.findOne(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 passport.use(new LocalStrategy(
@@ -82,12 +92,12 @@ app.get('/', passport.authenticate('local', {
     failureRedirect: '/auth'
   }));
 
-app.post('/addPreset', function (req, res) {
+app.post('/addPreset',isAuthenticated, function (req, res) {
 
-
+     //    var parseduser = req.user;
+   // var name = parseduser["username"];
    var db = req.db;
     var collection = db.get('presets');
-    
     // Submit to the DB
     collection.insert(req.body, function (err, doc) {
         if (err) {
@@ -111,7 +121,7 @@ app.post('/addPreset', function (req, res) {
 
 app.get('/getAllPresets', function (req, res) {
    // res.sendfile(__dirname + '/allPresets.json');
-   
+
     var db = req.db;
     var collection = db.get('presets');
     collection.find({},{},function(e,docs){
@@ -138,7 +148,7 @@ app.delete('/delPreset', function (req, res) {
     var collection = db.get('presets');
     collection.remove(req.body);
     console.log("J'ai Supprimé : " + JSON.stringify(req.body));
-    res.redirect(__dirname + '/');
+    res.sendfile(__dirname + '/home.html');
 });
 
 app.get('/auth', function(req, res, next) {
@@ -147,6 +157,12 @@ app.get('/auth', function(req, res, next) {
 
 app.get('/home',isAuthenticated, function(req, res) {
   res.sendfile(__dirname + '/home.html');
+
+  console.log("user json"+JSON.stringify(req.user));
+  
+      var parsedCollec = req.user;
+    var name = parsedCollec["username"];
+console.log("true user "+name);
 });
 
 app.get('/loginFailure' , function(req, res, next){
@@ -165,9 +181,14 @@ app.post('/login',
   
 /* Handle Logout */
 app.get('/signout', function(req, res) {
-  req.logout();
+  req.logOut();
+  req.session.destroy(function(err) {
+    res.redirect('/');
+// session updated 
+});
   console.log("out");
-  res.redirect('/');
+  //res.sendfile(__dirname + '/home.html');
+  //isAuthenticated;
 });
 // launch the http server on given port
 server.listen(8082);

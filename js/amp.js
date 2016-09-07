@@ -971,6 +971,7 @@ function Amp(context) {
       },
       body: JSON.stringify(currentPreset)
     });
+location.reload();
 
  }
  
@@ -980,7 +981,7 @@ function Amp(context) {
     fetch('/signout', {
       method: 'GET'
     });
-
+    //location.reload();
  }
  
  function updateData() {
@@ -1024,6 +1025,7 @@ function Amp(context) {
         },
         body: JSON.stringify(currentPreset)
       });
+      location.reload();
  }
  
  function deleteData() {
@@ -1041,7 +1043,7 @@ function Amp(context) {
        });
           
      console.log(currentPresetName);  
-     
+     location.reload();
  }
 
     // END PRESETS
