@@ -92,7 +92,7 @@ app.get('/', passport.authenticate('local', {
     failureRedirect: '/auth'
   }));
 
-app.post('/addPreset',isAuthenticated, function (req, res) {
+app.post('/addPreset', function (req, res) {
 
      //    var parseduser = req.user;
    // var name = parseduser["username"];

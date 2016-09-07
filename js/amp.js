@@ -933,6 +933,9 @@ function Amp(context) {
         
     var currentPreset = {
             name: prompt("Please enter preset name", "My Preset"),
+            auteur: prompt("Please enter preset author", "Author Name"),
+            description: prompt("Please enter preset description", "Description"),
+            genre: prompt("Please enter preset gender", "My gender"),
             distoName : currentDistoName,
             boost: boost.isActivated(),
             LCF: lowCutFilter.frequency.value,
