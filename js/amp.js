@@ -976,6 +976,8 @@ function Amp(context) {
     });
 location.reload();
 
+
+
  }
  
  function signOut() {
@@ -984,7 +986,11 @@ location.reload();
     fetch('/signout', {
       method: 'GET'
     });
+
     //location.reload();
+
+location.reload();
+
  }
  
  function updateData() {
@@ -1029,6 +1035,17 @@ location.reload();
         body: JSON.stringify(currentPreset)
       });
       location.reload();
+
+ }
+ 
+ function sreenPage(){
+     html2canvas(document.body, {
+  onrendered: function(canvas) {
+    document.body.appendChild(canvas);
+  }
+});
+     console.log("Screeeen");
+
  }
  
  function deleteData() {
@@ -1137,6 +1154,7 @@ location.reload();
         updateData: updateData,
         signOut: signOut,
         deleteData: deleteData,
+        sreenPage: sreenPage,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,
