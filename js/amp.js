@@ -971,7 +971,7 @@ function Amp(context) {
       },
       body: JSON.stringify(currentPreset)
     });
-
+location.reload();
  }
  
  function signOut() {
@@ -980,7 +980,7 @@ function Amp(context) {
     fetch('/signout', {
       method: 'GET'
     });
-
+location.reload();
  }
  
  function updateData() {
@@ -1024,6 +1024,16 @@ function Amp(context) {
         },
         body: JSON.stringify(currentPreset)
       });
+      location.reload();
+ }
+ 
+ function sreenPage(){
+     html2canvas(document.body, {
+  onrendered: function(canvas) {
+    document.body.appendChild(canvas);
+  }
+});
+     console.log("Screeeen");
  }
  
  function deleteData() {
@@ -1041,7 +1051,7 @@ function Amp(context) {
        });
           
      console.log(currentPresetName);  
-     
+     location.reload();
  }
 
     // END PRESETS
@@ -1132,6 +1142,7 @@ function Amp(context) {
         updateData: updateData,
         signOut: signOut,
         deleteData: deleteData,
+        sreenPage: sreenPage,
         setPreset: setPreset,
         printCurrentAmpValues: printCurrentAmpValues,
         bypass: bypass,

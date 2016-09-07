@@ -6,6 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
         <script src="js/adapter.js"></script>
         <script src="js/initAudio.js"></script>
+        <script src="js/html2canvas.js"></script>
         <script src="js/visualization.js"></script>
         <script src="js/amp.js"></script>
         <script src="js/utils.js"></script>
@@ -198,6 +199,7 @@
                     <button id="deletedata" style="position:absolute;left:660px;top:430px" type="button" method="PUT" onclick="amp.updateData();" >Update Preset</button>
                     <button id="deletedata" style="position:absolute;left:770px;top:430px" type="button" method="DELETE" onclick="amp.deleteData();" >Delete Preset</button>
                     <button id="deletedata" style="position:absolute;left:880px;top:430px" type="button" method="POST" onclick="amp.signOut();" >Logout</button>
+                    <button id="deletedata" style="position:absolute;left:990px;top:430px" type="button" method="POST" onclick="amp.sreenPage();" >Screen</button>
                     <button  id="toggleGuitarIn" style="position:absolute;left:570px;top:300px" class="pulse"  type="button" onclick="toggleGuitarInput(event)">Guitar input: <span style='color:red;'>NOT ACTIVATED</span>, click to toggle on/off!</button>
                     <webaudio-knob id="Knob9"   style="position:absolute;left:570px;top:350px" src="img/Prophet.png" value="1" default="1" min="0" max="10" step="0.1" diameter="49" sprites="99" tooltip="InputGain"></webaudio-knob>
 
