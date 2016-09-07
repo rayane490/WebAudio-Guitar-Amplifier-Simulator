@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <title>WebAudio - edit presets</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="js/adapter.js"></script>
+    <script src="js/initAudio.js"></script>
+    <script src="js/visualization.js"></script>
+    <script src="js/amp.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/distorsionFactory.js"></script>
+    <script src="js/curveDrawer.js"></script>
+    <script src="./bower_components/webcomponentsjs/webcomponents.js"></script>
+    
+    <link rel="import" href="./bower_components/polymer/polymer.html">
+    <link rel="import" href="./webcomponents/webaudio-controls.min.html">
+    <link rel="stylesheet" charset="UTF-8" href="css/bootstrap.css">
+    
+</head>
+<body style="background-color:#eee;">
+
+    
+    
+    <script>
+        amp.doAllConnections();
+    </script>
+
+    <div class="row">
+        <h1>Edit presets</h1>
+        <div class="col-md-6 auth-connect-form">
+            <form>
+                <label for="QFPresetMenu2">Preset :</label>
+                <select id="QFPresetMenu2"></select>
+
+                <div class="form-group form-group-lg">
+                    <label for="editAuteur">Author</label>
+                    <input type="text" id="editAuteur" class="form-control"  />
+                </div>
+                <div class="form-group form-group-lg">
+                    <label for="editDesc">Description</label>
+                    <input type="text" id="editDesc" class="form-control" />
+                </div>
+                <div class="form-group form-group-lg">
+                    <label for="editGender">Gender</label>
+                    <input type="text" id="editGender" class="form-control" />
+                </div>
+                <div class="form-group form-group-lg pull-right">
+                    <input type="submit" class="btn btn-default btn-lg" value="Delete"/>
+                    <input type="submit" class="btn btn-default btn-lg" value="Update"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</html>
