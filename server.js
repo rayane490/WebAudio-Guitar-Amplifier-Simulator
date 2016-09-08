@@ -13,6 +13,7 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/presets');
 var session = require('express-session');
+var cookieSession = require('cookie-session');
 var passport = require('passport');
 
 // Init globals variables for each module required
