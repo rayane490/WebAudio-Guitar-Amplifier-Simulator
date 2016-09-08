@@ -5,7 +5,6 @@
 var express = require('express');
 var fs = require('fs');
 var myParser = require("body-parser");
-var connect = require('connect');
 var fetch = require('node-fetch');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
