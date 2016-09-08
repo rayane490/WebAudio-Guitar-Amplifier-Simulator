@@ -13,7 +13,7 @@
     "express-session": "*",
     "fs": "*",
     "monk": "*",
-    "node-fetch": "^1.5.3"
+    "node-fetch": "^1.5.3" 
   },
   "devDependencies": {},
   "scripts": {
