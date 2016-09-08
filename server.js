@@ -168,6 +168,16 @@ app.get('/home',isAuthenticated, function(req, res) {
 console.log("true user "+name);
 });
 
+app.get('/edit',isAuthenticated, function(req, res) {
+  res.sendfile(__dirname + '/edit.html');
+
+  console.log("user json"+JSON.stringify(req.user));
+  
+      var parsedCollec = req.user;
+    var name = parsedCollec["username"];
+console.log("true user "+name);
+});
+
 app.get('/loginFailure' , function(req, res, next){
 	res.send('Failure to authenticate');
 });
